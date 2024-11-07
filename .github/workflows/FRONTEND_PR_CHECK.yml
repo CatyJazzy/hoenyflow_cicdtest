@@ -41,6 +41,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+
             console.log("Repo context:", context.repo);  // repo 정보 확인용 로그
             const buildOutcome = '${{ steps.build.outcome }}';
       
