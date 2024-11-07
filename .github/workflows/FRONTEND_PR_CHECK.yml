@@ -41,14 +41,15 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(context.repo); // repo 정보 확인용 로그
+
+            console.log("Repo context:", context.repo);  // repo 정보 확인용 로그
             const buildOutcome = '${{ steps.build.outcome }}';
       
             await github.rest.checks.create({
-              owner: context.repo.owner,  // owner 정보
-              repo: context.repo.repo,    // repo 정보
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               name: 'Frontend Build',
-              head_sha: context.sha,
+              head_sha: context.payload.pull_request.head.sha,  // head SHA 수정
               status: 'completed',
               conclusion: buildOutcome === 'success' ? 'success' : 'failure',
               output: {
