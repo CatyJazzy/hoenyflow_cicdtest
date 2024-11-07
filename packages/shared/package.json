@@ -2,5 +2,5 @@
   "name": "shared",
    "scripts": {
     "build": "tsc -b"
-  },
+  }
 }
