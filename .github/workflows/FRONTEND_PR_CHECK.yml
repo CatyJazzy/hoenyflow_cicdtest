@@ -41,12 +41,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            console.log(context.repo); // repo 정보 확인용 로그
             const buildOutcome = '${{ steps.build.outcome }}';
-            const [owner, repo] = context.repo.full_name.split('/'); // owner와 repo 정보를 자동으로 가져옵니다.
-            
+      
             await github.rest.checks.create({
-              owner,
-              repo,
+              owner: context.repo.owner,  // owner 정보
+              repo: context.repo.repo,    // repo 정보
               name: 'Frontend Build',
               head_sha: context.sha,
               status: 'completed',
