@@ -42,10 +42,11 @@ jobs:
         with:
           script: |
             const buildOutcome = '${{ steps.build.outcome }}';
+            const [owner, repo] = context.repo.full_name.split('/'); // owner와 repo 정보를 자동으로 가져옵니다.
             
             await github.rest.checks.create({
-              owner: context.repo.owner,
-              repo: context.repo.name,
+              owner,
+              repo,
               name: 'Frontend Build',
               head_sha: context.sha,
               status: 'completed',
@@ -85,7 +86,6 @@ jobs:
                   : '빌드 실패 원인을 확인하시려면 위의 "Details"를 클릭하세요.'
               }
             });
-
             if (buildOutcome === 'failure') {
               core.setFailed('Frontend build failed');
             }
